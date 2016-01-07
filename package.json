@@ -1,0 +1,19 @@
+{
+  "name": "reverse-proxy",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "config": "^1.17.1",
+    "hapi": "^11.1.4",
+    "simpleconvert-xml": "0.0.7",
+    "wreck": "^7.0.0",
+    "xml2js": "^0.4.15",
+    "xmldom": "^0.1.19"
+  }
+}
