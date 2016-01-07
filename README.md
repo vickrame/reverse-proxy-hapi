@@ -4,6 +4,7 @@
 Mettre en place un reverse proxy avec hapi et joi
 
 ## Tests
+Test les méthodes http si le test est concluant forward vers google.fr sinon on affiche un message KO.
 
 POST : localhost:3000/xmlTojson
 ```
