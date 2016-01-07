@@ -15,7 +15,7 @@
 
     "connection": {
 
-      "host": "localhost",
+      "host": "rlon6668.spid.log.intra.laposte.fr",
 
       "port": 3000
     }

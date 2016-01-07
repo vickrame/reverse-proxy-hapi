@@ -56,7 +56,13 @@
   // Dans ce cas, il vous faudra définir la variable d'environnement NODE_ENV à production.json
   // Votre fichier ./config/production.json contiendra quant à lui les variables de configuration
   // qui viendront surcharger celles de votre fichier ./config/default.json
-  server.connection(Config.get('server.connection'));
+
+	
+  server.connection(Config.get('server.connection'), {
+    "key" : "/cca/tools/.ssl/londres-site-de-test.intra.laposte.fr_KEY.pem",
+    "cert" : "/cca/tools/.ssl/londres-site-de-test.intra.laposte.fr_CER.pem",
+    "ca" : "/cca/tools/.ssl/ca_SSL_chain_DSICentrale.pem"
+	} );
 
   // On demande à HapiJS de lancer le serveur
   server.start(function() {

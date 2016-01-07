@@ -9,27 +9,6 @@ var Joi = require('joi');
 //console.log(" validate : " + require('../validate/personne.js').validatorEmail);
 
 module.exports = [
-
-  /**
-   * GET /
-   *
-   * @description
-   * Index de l'API
-   *
-   * @return
-   * 200
-   */
-
-  {
-    method: 'GET',
-
-    path: '/',
-
-    handler: function(request, reply) {
-		reply.redirect('http://www.google.com');
-      //reply();      
-    }
-  },
   {
     method: 'GET',
     path: '/paramsQuery/{email}',
@@ -144,5 +123,13 @@ module.exports = [
 	   console.log("coucou " + request.payload);	
 	   reply.redirect("http://www.google.fr");      
     }
+},
+{
+	method: 'GET',
+	path: '/',
+	handler: function(request, reply){
+
+		reply.redirect("https://rlon6670-cca.intra.laposte.fr/ipas/ipas.do").header('X-Forwarded-For', 'EXTRANET').header('X-Frontal', 'PFE');
+	}
 }	
 ];
