@@ -45,8 +45,8 @@
   var utils = require('./utils.js');
   var server = new Hapi.Server();
   var parser = require('xml2js');
-  var simpleConvertXML = require('simpleconvert-XML'),
-	DOMParser = require('xmldom').DOMParser;
+  //var simpleConvertXML = require('simpleconvert-XML'),
+  //DOMParser = require('xmldom').DOMParser;
 	
   // On configure HapiJS depuis la configuration définie dans les fichiers de configuration
   // Par défaut, le fichier de configuration défini sera:

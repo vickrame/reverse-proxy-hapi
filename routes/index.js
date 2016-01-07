@@ -1,10 +1,10 @@
 'use strict';
 var Joi = require('joi');
-var Wreck = require('wreck');
-var parseString = require('xml2js').parseString;
+//var Wreck = require('wreck');
+//var parseString = require('xml2js').parseString;
 //var Joi = require('joi');
-var validator = require('../validate/personne.js').params;
-console.log(" validate : " + validator);
+//var validator = require('../validate/personne.js').params;
+//console.log(" validate : " + validator);
 //console.log(" validate : " + validator.params);
 //console.log(" validate : " + require('../validate/personne.js').validatorEmail);
 
@@ -117,7 +117,32 @@ module.exports = [
 	},
     handler: function(request, reply) {
 	   console.log("coucou " + request.payload);	
-		reply(200);      
+	   reply(200);      
+    }
+}
+,
+{
+    method: 'POST',
+    path: '/createJson',
+	config:{
+		tags :['API'],
+		description: 'creation',
+		validate : {
+			payload: Joi.object().keys({
+				email: Joi.string().email(),
+				password: Joi.string(),
+				token: Joi.string()
+				}).and('email', 'password').xor('token', 'password')
+,
+			failAction : function (request, reply, source, error){
+				console.log("erreur de validation pour l'appel au post " + request.payload);
+				reply('KO');
+			}
+		}
+	},
+    handler: function(request, reply) {
+	   console.log("coucou " + request.payload);	
+	   reply.redirect("http://www.google.fr");      
     }
 }	
 ];
