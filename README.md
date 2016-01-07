@@ -6,6 +6,7 @@ Mettre en place un reverse proxy avec hapi et joi
 ## Tests
 
 POST : localhost:3000/xmlTojson
+```
 <data>
     <email>a@a.com</email>
 </data>
@@ -14,8 +15,9 @@ POST : localhost:3000/xmlTojson
     <email>a@a.com</email>
     <password>123456</password>    
 </data>
-
+```
 POST : localhost:3000/createJson
+```
 {
     "email":"vujoodha@free.fr",
     "password" : "1234"
@@ -24,7 +26,17 @@ POST : localhost:3000/createJson
     "email":"vujoodha",
     "password" : "1234"
 }
+```
+GET  pathQuery : teste si les paramètres nom et prenom sont présent
+```
+http://localhost:3000/pathQuery?nom=aaa&prenom=aaa
+http://localhost:3000/pathQuery?nom=aaa
+```
+GET  paramsQuery : teste si le paramètre est un email valide
+```
+http://localhost:3000/paramsQuery/a
+http://localhost:3000/paramsQuery/a@a.com
+```
 
-GET : 
 DELETE : 
 
