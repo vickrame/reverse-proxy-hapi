@@ -45,6 +45,7 @@
   var utils = require('./utils.js');
   var server = new Hapi.Server();
   var parser = require('xml2js');
+  var Fs = require('fs');
   //var simpleConvertXML = require('simpleconvert-XML'),
   //DOMParser = require('xmldom').DOMParser;
 	
@@ -57,17 +58,42 @@
   // Votre fichier ./config/production.json contiendra quant à lui les variables de configuration
   // qui viendront surcharger celles de votre fichier ./config/default.json
 
-	
-  server.connection(Config.get('server.connection'), {
-    "key" : "/cca/tools/.ssl/londres-site-de-test.intra.laposte.fr_KEY.pem",
-    "cert" : "/cca/tools/.ssl/londres-site-de-test.intra.laposte.fr_CER.pem",
-    "ca" : "/cca/tools/.ssl/ca_SSL_chain_DSICentrale.pem"
-	} );
+server.register({
+    register: require('h2o2')
+}, function (err) {
+ 
+    if (err) {
+        console.log('Failed to load h2o2');
+    }
 
+});  
+  
+  
+var config = {
+    https: { 
+		port: 3001,
+		key: Fs.readFileSync('/cca/tools/.ssl/londres-site-de-test.intra.laposte.fr_KEY.pem'), 
+		cert: Fs.readFileSync('/cca/tools/.ssl/londres-site-de-test.intra.laposte.fr_CER.pem'),
+		ca: Fs.readFileSync('/cca/tools/.ssl/ca_SSL_chain_DSICentrale.pem')
+    }
+}
+
+  server.connection(Config.get('server.connection'));
+
+ server.connection(
+    Config.get('server.connectionHttps'),
+    {
+		key: Fs.readFileSync('/cca/tools/.ssl/londres-site-de-test.intra.laposte.fr_KEY.pem'), 
+		cert: Fs.readFileSync('/cca/tools/.ssl/londres-site-de-test.intra.laposte.fr_CER.pem'),
+		ca: Fs.readFileSync('/cca/tools/.ssl/ca_SSL_chain_DSICentrale.pem')
+    }
+);
+
+  
   // On demande à HapiJS de lancer le serveur
   server.start(function() {
     // Lorsque le serveur est lancé, on affiche un petit message
-    log('%s %s est lancé sur %s', appPackage.name, appPackage.version, server.info.uri);
+    //log('%s %s est lancé sur %s', appPackage.name, appPackage.version, server.info.uri);
   });
 
 server.ext('onRequest', function (request, reply) {

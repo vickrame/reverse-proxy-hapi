@@ -12,12 +12,13 @@
  */
 {
   "server": {
-
     "connection": {
-
       "host": "rlon6668.spid.log.intra.laposte.fr",
-
       "port": 3000
+    },
+	"connectionHttps": {
+      "host": "rlon6668.spid.log.intra.laposte.fr",
+      "port": 8443
     }
   }
 }

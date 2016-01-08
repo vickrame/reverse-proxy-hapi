@@ -127,9 +127,22 @@ module.exports = [
 {
 	method: 'GET',
 	path: '/',
-	handler: function(request, reply){
-
-		reply.redirect("https://rlon6670-cca.intra.laposte.fr/ipas/ipas.do").header('X-Forwarded-For', 'EXTRANET').header('X-Frontal', 'PFE');
+	handler : {
+		proxy: {
+			passThrough: true,
+			xforward: true,
+            mapUri: function (request, callback) {
+			console.log('connexion nouvelle ');
+				callback(null, 'https://rlon6670-cca.intra.laposte.fr/', {
+				'X-Forwarded-For': 'EXTRANET',
+				'X-Frontal': 'PFE',
+				'Host' :'rlon6670-cca.intra.laposte.fr',			
+				'Refer' :'rlon6668.spid.log.intra.laposte.fr/',	
+				'X-Forwarded-Host' :'rlon6668.spid.log.intra.laposte.fr/',
+				'X-Forwarded-Proto' : 'hhtps'				
+				});
+            }
+		}
 	}
 }	
 ];
