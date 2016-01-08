@@ -11,10 +11,10 @@ var Joi = require('joi');
 module.exports = [
   {
     method: 'GET',
-    path: '/paramsQuery/{email}',
+    path: '/pathParam/{email}',
 	config:{
 		tags :['API'],
-		description: 'l\'api de toto',
+		description: 'l\'api de test pour la metho GET pour le cas des path params',
 		validate : {
 			params : {
 				email : Joi.string().email().required()
@@ -56,10 +56,10 @@ module.exports = [
 ,
 {
     method: 'DELETE',
-    path: '/paramsQuery/{email}',
+    path: '/pathParam/{email}',
 	config:{
 		tags :['API'],
-		description: 'l\'api de toto',
+		description: 'l\'api de test de la methode HTTP DELETE pour le pathParams',
 		validate : {
 			params : {
 				email : Joi.string().email().required()
