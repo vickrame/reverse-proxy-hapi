@@ -1,24 +1,16 @@
 'use strict';
 var Joi = require('joi');
-//var Wreck = require('wreck');
-//var parseString = require('xml2js').parseString;
-//var Joi = require('joi');
-//var validator = require('../validate/personne.js').params;
-//console.log(" validate : " + validator);
-//console.log(" validate : " + validator.params);
-//console.log(" validate : " + require('../validate/personne.js').validatorEmail);
+var personneValidator = require('../validate/personne.js');
 
 module.exports = [
   {
     method: 'GET',
-    path: '/pathParam/{email}',
+    path: '/personnes/{email}',
 	config:{
 		tags :['API'],
-		description: 'l\'api de test pour la metho GET pour le cas des path params',
+		description: 'retourne le detail d\' personne à partir de son email',
 		validate : {
-			params : {
-				email : Joi.string().email().required()
-			},
+			params : personneValidator.schemaEmail,
 			failAction : function (request, reply, source, error){
 				console.log("erreur de validation");
 				reply('KO');
@@ -26,22 +18,18 @@ module.exports = [
 		}
 	},
     handler: function(request, reply) {
-		reply.redirect('http://www.google.com');
-      //reply();      
+		reply.redirect('http://www.google.com'); 
     }
   }
 ,
   {
     method: 'GET',
-    path: '/pathQuery',
+    path: '/personnes',
 	config:{
 		tags :['API'],
-		description: 'test de query param',
+		description: 'retourne le detail d\' personne à partir de son nom et prenom',
 		validate : {    
-			query: {
-				nom: Joi.string().min(3).max(30).required(),
-				prenom: Joi.string().min(3).max(30).required()
-			},
+			query: personneValidator.schemaNomPrenom,
 			failAction : function (request, reply, source, error){
 				console.log("erreur de validation");
 				reply('KO');
@@ -56,14 +44,12 @@ module.exports = [
 ,
 {
     method: 'DELETE',
-    path: '/pathParam/{email}',
+    path: '/personnes/{email}',
 	config:{
 		tags :['API'],
-		description: 'l\'api de test de la methode HTTP DELETE pour le pathParams',
+		description: 'suppression de la ressources personnes en fonction de son email',
 		validate : {
-			params : {
-				email : Joi.string().email().required()
-			},
+			params : personneValidator.schemaEmail,
 			failAction : function (request, reply, source, error){
 				console.log("erreur de validation pour l'appel au delete");
 				reply('KO');
@@ -87,7 +73,7 @@ module.exports = [
 				password: Joi.string(),
 				token: Joi.string()
 				}).and('email', 'password').xor('token', 'password')
-,
+			,
 			failAction : function (request, reply, source, error){
 				console.log("erreur de validation pour l'appel au post " + request.payload);
 				reply('KO');
@@ -102,7 +88,7 @@ module.exports = [
 ,
 {
     method: 'POST',
-    path: '/createJson',
+    path: '/personnes',
 	config:{
 		tags :['API'],
 		description: 'creation',
@@ -132,15 +118,17 @@ module.exports = [
 			passThrough: true,
 			xforward: true,
             mapUri: function (request, callback) {
-			console.log('connexion nouvelle ');
-				callback(null, 'https://rlon6670-cca.intra.laposte.fr/', {
+			console.log('connexion nouvelle pour ipas');
+				callback(null, 'https://rlon6670-cca.intra.laposte.fr/',
+				 {
 				'X-Forwarded-For': 'EXTRANET',
 				'X-Frontal': 'PFE',
 				'Host' :'rlon6670-cca.intra.laposte.fr',			
-				'Refer' :'rlon6668.spid.log.intra.laposte.fr/',	
-				'X-Forwarded-Host' :'rlon6668.spid.log.intra.laposte.fr/',
-				'X-Forwarded-Proto' : 'hhtps'				
-				});
+				'Referrer' :'rlon6668.spid.log.intra.laposte.fr/',	
+				'X-Forwarded-Host' :'rlon6668.spid.log.intra.laposte.fr',
+				'X-Forwarded-Proto' : 'https'				
+				}
+				);
             }
 		}
 	}
